@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-900">
-            Estoque
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-gray-900">
+                Estoque
+            </h2>
+            <a href="{{ route('estoque.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ease-in-out duration-150">
+                + Novo Item
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
