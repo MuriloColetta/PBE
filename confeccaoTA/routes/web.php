@@ -19,26 +19,15 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
-    Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+    Route::resource('clientes', ClienteController::class);
 
-    Route::get('/produtos/create', [ProdutoController::class, 'create'])->name('produtos.create');
-    Route::get('/estoque/create', [EstoqueController::class, 'create'])->name('estoque.create');
-    Route::get('/fornecedor/create', [FornecedorController::class, 'create'])->name('fornecedor.create');
-    Route::get('/pedidos/create', [PedidoController::class, 'create'])->name('pedidos.create');
+    Route::resource('produtos', ProdutoController::class);
 
-    Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');
-    Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
+    Route::resource('estoque', EstoqueController::class);
 
-    Route::get('/estoque', [EstoqueController::class, 'index'])->name('estoque.index');
-    Route::post('/estoque', [EstoqueController::class, 'store'])->name('estoque.store');
+    Route::resource('fornecedor', FornecedorController::class);
 
-    Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('fornecedor.index');
-    Route::post('/fornecedor', [FornecedorController::class, 'store'])->name('fornecedor.store');
-
-    Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
-    Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
+    Route::resource('pedidos', PedidoController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

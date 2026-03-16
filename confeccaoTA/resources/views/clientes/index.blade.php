@@ -22,39 +22,32 @@
                     Nenhum cliente encontrado.
                 </div>
             @else
-                <div class="overflow-hidden rounded-xl bg-white shadow ring-1 ring-gray-200">
-                    <table class="min-w-full text-sm">
-                        <thead class="bg-gray-50 text-left text-gray-600">
-                            <tr>
-                                <th class="px-4 py-3">Nome</th>
-                                <th class="px-4 py-3">CPF</th>
-                                <th class="px-4 py-3">Telefone</th>
-                                <th class="px-4 py-3">Reserva</th>
-                            </tr>
-                        </thead>
-
-                        <tbody class="divide-y">
-                            @foreach($clientes as $c)
-                                <tr>
-                                    <td class="px-4 py-3 font-semibold text-gray-900">
-                                        {{ $c->nome }}
-                                    </td>
-
-                                    <td class="px-4 py-3 text-center">
-                                        {{ $c->cpf ?? '-' }}
-                                    </td>
-
-                                    <td class="px-4 py-3 text-center">
-                                        {{ $c->telefone ?? '-' }}
-                                    </td>
-
-                                    <td class="px-4 py-3 text-center">
-                                        {{ $c->reserva ? 'Sim' : 'Não' }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($clientes as $c)
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $c->nome }}</h3>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <p><strong>CPF:</strong> {{ $c->cpf ?? '-' }}</p>
+                                    <p><strong>Telefone:</strong> {{ $c->telefone ?? '-' }}</p>
+                                    <p><strong>E-mail:</strong> {{ $c->email ?? '-' }}</p>
+                                    <p><strong>Endereço:</strong> {{ $c->endereco ?? '-' }}</p>
+                                </div>
+                                <div class="mt-4 flex space-x-2">
+                                    <a href="{{ route('clientes.edit', $c->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
+                                        Editar
+                                    </a>
+                                    <form action="{{ route('clientes.destroy', $c->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150" onclick="return confirm('Tem certeza que deseja deletar este cliente?')">
+                                            Deletar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             @endif
                 </div>

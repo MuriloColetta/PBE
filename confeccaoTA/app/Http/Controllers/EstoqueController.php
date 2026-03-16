@@ -30,4 +30,30 @@ class EstoqueController extends Controller
 
         return redirect()->route('estoque.index')->with('success', 'Item criado com sucesso!');
     }
+
+    public function edit(Estoque $estoque)
+    {
+        return view('estoque.edit', compact('estoque'));
+    }
+
+    public function update(Request $request, Estoque $estoque)
+    {
+        $data = $request->validate([
+            'nome'       => ['required','string','max:255'],
+            'sku'        => ['nullable','string','max:100'],
+            'quantidade' => ['required','integer','min:0'],
+            'preco'      => ['nullable','numeric','min:0'],
+        ]);
+
+        $estoque->update($data);
+
+        return redirect()->route('estoque.index')->with('success', 'Item atualizado com sucesso!');
+    }
+
+    public function destroy(Estoque $estoque)
+    {
+        $estoque->delete();
+
+        return redirect()->route('estoque.index')->with('error', 'Item deletado com sucesso!');
+    }
 }
