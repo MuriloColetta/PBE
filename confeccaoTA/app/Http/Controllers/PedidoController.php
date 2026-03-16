@@ -29,7 +29,7 @@ class PedidoController extends Controller
 
         Pedido::create($data);
 
-        return redirect()->route('pedidos.index')->with('success', 'Pedido criado!');
+        return redirect()->route('pedidos.index')->with('success', 'Pedido criado com sucesso!');
     }
 
     public function edit(Pedido $pedido)

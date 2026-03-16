@@ -37,7 +37,7 @@
                                     <form action="{{ route('estoque.destroy', $i->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150" onclick="return confirm('Tem certeza que deseja remover este item?')">
+                                        <button type="button" onclick="abrirModal({{ $i->id }}, '{{ $i->nome }}')" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">
                                             Deletar
                                         </button>
                                     </form>
@@ -55,4 +55,54 @@
             </div>
         </div>
     </div>
+    <!-- Modal Delete -->
+    <div id="modalDelete" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">
+                Confirmar exclusão
+            </h2>
+            <p class="text-sm text-gray-600 mb-6">
+                Tem certeza que deseja remover o item 
+                <strong id="nomeItem"></strong> do estoque?
+            </p>
+            <div class="flex justify-end space-x-3">
+                <button onclick="fecharModal()" 
+                    class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">
+                    Cancelar
+                </button>
+                <form id="formDelete" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                        Deletar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
+
+<script>
+    function abrirModal(id, nome){
+
+        let modal = document.getElementById('modalDelete');
+        let form = document.getElementById('formDelete');
+        let nomeItem = document.getElementById('nomeItem');
+
+        form.action = "{{ url('estoque') }}/" + id;
+
+        nomeItem.innerText = nome;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function fecharModal(){
+
+        let modal = document.getElementById('modalDelete');
+
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+</script>
