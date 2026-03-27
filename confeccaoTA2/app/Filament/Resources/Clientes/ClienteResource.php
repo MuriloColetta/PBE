@@ -30,15 +30,12 @@ class ClienteResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        // return ClienteForm::configure($schema);
-        return $schema
+        return ClienteForm::configure($schema)
         ->schema([
             TextInput::make('nome')->required()->label('Nome Completo'),
             TextInput::make('email')->email()->label('E-mail'),
-            TextInput::make('telefone')->tel()->label('Telefone')->mask('(00) 00000-0000'),
-            TextInput::make('documento')->label('CPF ou CNPJ')->mask(RawJs::make(<<<'JS'
-                $input.length > 14 ? '00.000.000/0000-00' : '000.000.000-00' 
-            JS)),
+            TextInput::make('telefone')->tel()->label('Telefone'),
+            TextInput::make('documento')->label('CPF ou CNPJ'),
         ]);
     }
 
@@ -49,8 +46,7 @@ class ClienteResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return ClientesTable::configure($table);
-        return $table
+        return ClientesTable::configure($table)
         ->columns([
             TextColumn::make('nome')->searchable(),
             TextColumn::make('email')->searchable(),

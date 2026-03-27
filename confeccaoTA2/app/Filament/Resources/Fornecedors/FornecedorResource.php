@@ -29,8 +29,7 @@ class FornecedorResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        // return FornecedorForm::configure($schema);
-        return $schema
+        return FornecedorForm::configure($schema)
         ->schema([
             TextInput::make('nome')->required()->label('Nome Completo'),
             TextInput::make('email')->email()->label('E-mail'),
@@ -46,8 +45,7 @@ class FornecedorResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return FornecedorsTable::configure($table);
-        return $table
+        return FornecedorsTable::configure($table)
         ->columns([
             TextColumn::make('nome')->searchable(),
             TextColumn::make('email')->searchable(),

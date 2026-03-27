@@ -33,8 +33,7 @@ class PedidoResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        // return PedidoForm::configure($schema);
-        return $schema
+        return PedidoForm::configure($schema)
         ->schema([
             Select::make('cliente_id')
             ->relationship('cliente', 'nome')
@@ -104,8 +103,7 @@ class PedidoResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return PedidosTable::configure($table);
-        return $table
+        return PedidosTable::configure($table)
         ->columns([
             TextColumn::make('cliente.nome')
             ->label('Cliente')

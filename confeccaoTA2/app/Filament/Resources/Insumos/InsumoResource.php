@@ -29,8 +29,7 @@ class InsumoResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        // return InsumoForm::configure($schema);
-        return $schema
+        return InsumoForm::configure($schema)
         ->schema([
             TextInput::make('nome')->required()->label('Nome do Insumo'),
             TextInput::make('unidade_medida')->required()->label('Unidade de Medida'),
@@ -46,8 +45,7 @@ class InsumoResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return InsumosTable::configure($table);
-        return $table
+        return InsumosTable::configure($table)
         ->columns([
             TextColumn::make('nome')->searchable(),
             TextColumn::make('unidade_medida'),

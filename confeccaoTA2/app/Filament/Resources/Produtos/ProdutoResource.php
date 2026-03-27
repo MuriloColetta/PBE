@@ -29,8 +29,7 @@ class ProdutoResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        // return ProdutoForm::configure($schema);
-        return $schema
+        return ProdutoForm::configure($schema)
         ->schema([
             TextInput::make('nome')->required()->label('Nome do Produto'),
             TextInput::make('referencia')->label('Código de Referência'),
@@ -46,8 +45,7 @@ class ProdutoResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return ProdutosTable::configure($table);
-        return $table
+        return ProdutosTable::configure($table)
         ->columns([
             TextColumn::make('nome')->searchable(),
             TextColumn::make('referencia'),
