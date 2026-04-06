@@ -11,6 +11,7 @@ use App\Filament\Resources\Permissions\Schemas\PermissionInfolist;
 use App\Filament\Resources\Permissions\Tables\PermissionsTable;
 // use App\Models\Permission;
 use Spatie\Permission\Models\Permission;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -24,6 +25,14 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
+    protected static string|UnitEnum|null $navigationGroup = 'Administração';
+    protected static ?int $navigationSort = 1;
+
+    // public static function canAccess(): bool
+    // {
+    //     return auth()->user()?->hasRole('Admin') ?? false;
+    // }
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Permissões';
@@ -33,12 +42,13 @@ class PermissionResource extends Resource
         return PermissionForm::configure($schema)
         ->schema([
             TextInput::make('name')
-            ->label('Nome da Regra')
-            ->required(),
-
-            TextInput::make('guard_name')
-            ->label('Sigla da Regra'),
+                ->label('Nome da Permissão')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->maxLength(255)
+                ->columnSpanFull(),
         ]);
+        
     }
 
     public static function infolist(Schema $schema): Schema
@@ -51,18 +61,18 @@ class PermissionResource extends Resource
         return PermissionsTable::configure($table)
         ->columns([
             TextColumn::make('name')
-            ->label('Nome da Regra')
-            ->searchable()
-            ->sortable(),
+                ->label('Nome da Permissão')
+                ->searchable()
+                ->sortable(),
 
-            TextColumn::make('guard_name')
-            ->label('Sigla da Regra')
-            ->searchable()
-            ->sortable(),
+            TextColumn::make('created_at')
+                ->label('Criada em')
+                ->dateTime('d/m/Y')
+                ->sortable(),
         ])
         ->toolbarActions([
                 DeleteBulkAction::make(),
-        ]);;
+        ]);
     }
 
     public static function getRelations(): array

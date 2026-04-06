@@ -10,6 +10,7 @@ use App\Filament\Resources\MovimentacaoEstoques\Schemas\MovimentacaoEstoqueForm;
 use App\Filament\Resources\MovimentacaoEstoques\Schemas\MovimentacaoEstoqueInfolist;
 use App\Filament\Resources\MovimentacaoEstoques\Tables\MovimentacaoEstoquesTable;
 use App\Models\MovimentacaoEstoque;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -23,6 +24,8 @@ use Filament\Actions\DeleteBulkAction;
 class MovimentacaoEstoqueResource extends Resource
 {
     protected static ?string $model = MovimentacaoEstoque::class;
+    protected static string|UnitEnum|null $navigationGroup = 'Estoque';
+    protected static ?int $navigationSort = 3;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

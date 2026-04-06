@@ -10,6 +10,7 @@ use App\Filament\Resources\Fornecedors\Schemas\FornecedorForm;
 use App\Filament\Resources\Fornecedors\Schemas\FornecedorInfolist;
 use App\Filament\Resources\Fornecedors\Tables\FornecedorsTable;
 use App\Models\Fornecedor;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -22,6 +23,8 @@ use Filament\Actions\DeleteBulkAction;
 class FornecedorResource extends Resource
 {
     protected static ?string $model = Fornecedor::class;
+    protected static string|UnitEnum|null $navigationGroup = 'Cadastros Gerais';
+    protected static ?int $navigationSort = 2;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

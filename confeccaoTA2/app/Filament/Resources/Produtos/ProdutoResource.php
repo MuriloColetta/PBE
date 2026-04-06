@@ -10,6 +10,7 @@ use App\Filament\Resources\Produtos\Schemas\ProdutoForm;
 use App\Filament\Resources\Produtos\Schemas\ProdutoInfolist;
 use App\Filament\Resources\Produtos\Tables\ProdutosTable;
 use App\Models\Produto;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -22,6 +23,13 @@ use Filament\Actions\DeleteBulkAction;
 class ProdutoResource extends Resource
 {
     protected static ?string $model = Produto::class;
+    protected static string|UnitEnum|null $navigationGroup = 'Estoque';
+    protected static ?int $navigationSort = 2;
+
+    // public static function canAccess(): bool
+    // {
+    //     return auth()->user()?->can('acessar_clientes') ?? false; 
+    // }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

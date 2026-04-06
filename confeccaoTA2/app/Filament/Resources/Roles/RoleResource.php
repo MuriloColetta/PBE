@@ -11,6 +11,7 @@ use App\Filament\Resources\Roles\Schemas\RoleInfolist;
 use App\Filament\Resources\Roles\Tables\RolesTable;
 // use App\Models\Role;
 use Spatie\Permission\Models\Role;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -23,18 +24,13 @@ use Filament\Tables\Columns\TextColumn;
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
+    protected static string|UnitEnum|null $navigationGroup = 'Administração';
+    protected static ?int $navigationSort = 2;
 
     // public static function canAccess(): bool
     // {
     //     return auth()->user()?->hasRole('Admin') ?? false;
     // }
-
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('admin') ?? false;
-        return auth()->user()?->can('acessar_clientes') ?? false;
-        return auth()->user()?->can('acessar_produtos') ?? false;
-    }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -44,16 +40,18 @@ class RoleResource extends Resource
     {
         return RoleForm::configure($schema)
         ->schema([
-            Select::make('permissions')
-            ->label('Permissões de Acesso')
-            ->multiple()
-            ->relationship('permissions', 'name')
-            ->preload()
-            ->columnSpanFull(),
-
             TextInput::make('name')
-            ->label('Liberação de Menu')
-            ->required(),
+                ->label('Nome do Cargo')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->maxLength(255),
+                
+            Select::make('permissions')
+                ->label('Permissões de Acesso')
+                ->multiple()
+                ->relationship('permissions', 'name')
+                ->preload()
+                ->columnSpanFull(),
         ]);
     }
 
@@ -66,15 +64,15 @@ class RoleResource extends Resource
     {
         return RolesTable::configure($table)
         ->columns([
-            TextColumn::make('permissions.name')
-            ->label('Permuissões de Acesso')
-            ->searchable()
-            ->sortable(),
-
             TextColumn::make('name')
-            ->label('Liberação de Menu')
-            ->searchable()
-            ->sortable(),
+                ->label('Nome do Cargo')
+                ->searchable()
+                ->sortable(),
+                
+            TextColumn::make('created_at')
+                ->label('Criado em')
+                ->dateTime('d/m/Y')
+                ->sortable(),
         ]);
     }
 
